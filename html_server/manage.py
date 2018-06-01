@@ -7,4 +7,7 @@ if __name__ == "__main__":
 
     from django.core.management import execute_from_command_line
 
-    execute_from_command_line(sys.argv)
+    command = sys.argv
+    #command = "runserver 0.0.0.0:8000"
+
+    execute_from_command_line(command)
