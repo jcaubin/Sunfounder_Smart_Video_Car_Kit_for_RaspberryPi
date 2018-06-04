@@ -1,5 +1,15 @@
 #!/usr/bin/env python
-import RPi.GPIO as GPIO
+
+# Replace libraries by fake ones
+import sys
+#import fake_rpi
+from fake_rpi.RPi import GPIO
+
+# sys.modules['RPi'] = fake_rpi.RPi     # Fake RPi (GPIO)
+# sys.modules['smbus'] = fake_rpi.smbus # Fake smbus (I2C)
+
+#import fake_rpi.RPi.GPIO as GPIO
+#import RPi.GPIO as GPIO
 import PCA9685 as p
 import time    # Import necessary modules
 
