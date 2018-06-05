@@ -22,47 +22,47 @@ tcpCliSock.connect(ADDR)                    # Connect with the server
 # ============================================================================= 
 def forward_fun(event):
 	print('forward')
-	tcpCliSock.send('forward')
+	tcpCliSock.send('forward'.encode())
 
 def backward_fun(event):
 	print('backward')
-	tcpCliSock.send('backward')
+	tcpCliSock.send('backward'.encode())
 
 def left_fun(event):
 	print('left')
-	tcpCliSock.send('left')
+	tcpCliSock.send('left'.encode())
 
 def right_fun(event):
 	print('right')
-	tcpCliSock.send('right')
+	tcpCliSock.send('right'.encode())
 
 def stop_fun(event):
 	print('stop')
-	tcpCliSock.send('stop')
+	tcpCliSock.send('stop'.encode())
 
 def home_fun(event):
 	print('home')
-	tcpCliSock.send('home')
+	tcpCliSock.send('home'.encode())
 
 def x_increase(event):
 	print('x+')
-	tcpCliSock.send('x+')
+	tcpCliSock.send('x+'.encode())
 
 def x_decrease(event):
 	print('x-')
-	tcpCliSock.send('x-')
+	tcpCliSock.send('x-'.encode())
 
 def y_increase(event):
-	print('y+')
-	tcpCliSock.send('y+')
+	print('y+'.encode())
+	tcpCliSock.send('y+'.encode())
 
 def y_decrease(event):
-	print('y-')
-	tcpCliSock.send('y-')
+	print('y-'.encode())
+	tcpCliSock.send('y-'.encode())
 
 def xy_home(event):
-	print('xy_home')
-	tcpCliSock.send('xy_home')
+	print('xy_home'.encode())
+	tcpCliSock.send('xy_home'.encode())
 
 # =============================================================================
 # Exit the GUI program and close the network connection between the client 
@@ -70,7 +70,7 @@ def xy_home(event):
 # =============================================================================
 def quit_fun(event):
 	top.quit()
-	tcpCliSock.send('stop')
+	tcpCliSock.send('stop'.encode())
 	tcpCliSock.close()
 
 # =============================================================================

@@ -2,6 +2,7 @@
 # Replace libraries by fake ones
 import sys
 import fake_rpi
+import codecs
 
 sys.modules['RPi'] = fake_rpi.RPi     # Fake RPi (GPIO)
 sys.modules['smbus'] = fake_rpi.smbus # Fake smbus (I2C)
@@ -42,7 +43,7 @@ while True:
 
 	while True:
 		data = ''
-		data = tcpCliSock.recv(BUFSIZ)    # Receive data sent from the client. 
+		data = codecs.decode(tcpCliSock.recv(BUFSIZ))    # Receive data sent from the client. 
 		# Analyze the command received and control the car accordingly.
 		if not data:
 			break
@@ -107,7 +108,7 @@ while True:
 			spd = data[8:]
 			try:
 				spd = int(spd)
-				motor.forward(spd)
+				motor.forwardWithSpeed(spd)
 			except:
 				print('Error speed =', spd)
 		elif data[0:9] == 'backward=':
@@ -115,7 +116,7 @@ while True:
 			spd = data.split('=')[1]
 			try:
 				spd = int(spd)
-				motor.backward(spd)
+				motor.backwardWithSpeed(spd)
 			except:
 				print('ERROR, speed =', spd)
 		else:
