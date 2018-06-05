@@ -14,6 +14,7 @@
 
 import sys
 import fake_rpi
+import platform
 
 sys.modules['RPi'] = fake_rpi.RPi     # Fake RPi (GPIO)
 sys.modules['smbus'] = fake_rpi.smbus # Fake smbus (I2C)
@@ -56,6 +57,8 @@ class PWM(object):
     _DEBUG = False
     _DEBUG_INFO = 'DEBUG "PCA9685.py":'
 
+    
+
     def _get_bus_number(self):
         pi_revision = self._get_pi_revision()
         if   pi_revision == '0':
@@ -79,8 +82,7 @@ class PWM(object):
         # https://github.com/quick2wire/quick2wire-python-api
         # Updated revision info from: http://elinux.org/RPi_HardwareHistory#Board_Revision_History
 
-        #fake
-        return '3 Module B'
+       
 
         try:       
             f = open('/proc/cpuinfo','r')
@@ -106,9 +108,14 @@ class PWM(object):
                         quit()
         except Exception as e:
             f.close()
-            print(e)
-            print('Exiting...')
-            quit()
+            if platform.system() == 'Windows':
+                print('Entorno de pruebas en windows')
+                 #fake
+                return '3 Module B'
+            else:    
+                print(e)
+                print('Exiting...')
+                quit()
         finally:
             f.close()
 
@@ -197,9 +204,10 @@ class PWM(object):
             print('Exiting...')
         quit()
 
+ 
     @property
     def frequency(self):
-        return _frequency
+        return self._frequency
 
     @frequency.setter
     def frequency(self, freq):
@@ -218,7 +226,7 @@ class PWM(object):
         if self._DEBUG:
             print(self._DEBUG_INFO, 'Final pre-scale: %d' % prescale)
 
-        old_mode = self._read_byte_data(self._MODE1);
+        old_mode = self._read_byte_data(self._MODE1)
         new_mode = (old_mode & 0x7F) | 0x10
         self._write_byte_data(self._MODE1, new_mode)
         self._write_byte_data(self._PRESCALE, int(math.floor(prescale)))

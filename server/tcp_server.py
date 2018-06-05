@@ -10,7 +10,7 @@ sys.modules['smbus'] = fake_rpi.smbus # Fake smbus (I2C)
 import video_dir
 import car_dir
 import motor
-from socket import *
+import socket as sck
 from time import ctime          # Import necessary modules   
 
 ctrl_cmd = ['forward', 'backward', 'left', 'right', 'stop', 'read cpu_temp', 'home', 'distance', 'x+', 'x-', 'y+', 'y-', 'xy_home']
@@ -22,7 +22,7 @@ PORT = 21568
 BUFSIZ = 1024       # Size of the buffer
 ADDR = (HOST, PORT)
 
-tcpSerSock = socket(AF_INET, SOCK_STREAM)    # Create a socket.
+tcpSerSock = sck.socket(sck.AF_INET, sck.SOCK_STREAM)    # Create a socket.
 tcpSerSock.bind(ADDR)    # Bind the IP address and port number of the server. 
 tcpSerSock.listen(5)     # The parameter of listen() defines the number of connections permitted at one time. Once the 
                          # connections are full, others will be rejected. 

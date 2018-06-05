@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from tkinter import *
-from socket import *      # Import necessary modules
+import tkinter as tki
+import socket  as sck      # Import necessary modules
 
 ctrl_cmd = ['forward', 'backward', 'left', 'right', 'stop', 'read cpu_temp', 'home', 'distance', 'x+', 'x-', 'y+', 'y-', 'xy_home']
 
-top = Tk()   # Create a top window
+top = tki.Tk()   # Create a top window
 top.title('Sunfounder Raspberry Pi Smart Video Car')
 
 HOST = '127.0.0.1'    # Server(Raspberry Pi) IP address
@@ -13,7 +13,7 @@ PORT = 21568
 BUFSIZ = 1024             # buffer size
 ADDR = (HOST, PORT)
 
-tcpCliSock = socket(AF_INET, SOCK_STREAM)   # Create a socket
+tcpCliSock = sck.socket(sck.AF_INET, sck.SOCK_STREAM)   # Create a socket
 tcpCliSock.connect(ADDR)                    # Connect with the server
 
 # =============================================================================
@@ -76,12 +76,12 @@ def quit_fun(event):
 # =============================================================================
 # Create buttons
 # =============================================================================
-Btn0 = Button(top, width=5, text='Forward')
-Btn1 = Button(top, width=5, text='Backward')
-Btn2 = Button(top, width=5, text='Left')
-Btn3 = Button(top, width=5, text='Right')
-Btn4 = Button(top, width=5, text='Quit')
-Btn5 = Button(top, width=5, height=2, text='Home')
+Btn0 = tki.Button(top, width=5, text='Forward')
+Btn1 = tki.Button(top, width=5, text='Backward')
+Btn2 = tki.Button(top, width=5, text='Left')
+Btn3 = tki.Button(top, width=5, text='Right')
+Btn4 = tki.Button(top, width=5, text='Quit')
+Btn5 = tki.Button(top, width=5, height=2, text='Home')
 
 # =============================================================================
 # Buttons layout
@@ -110,11 +110,11 @@ Btn5.bind('<ButtonRelease-1>', home_fun)
 # =============================================================================
 # Create buttons
 # =============================================================================
-Btn07 = Button(top, width=5, text='X+', bg='red')
-Btn08 = Button(top, width=5, text='X-', bg='red')
-Btn09 = Button(top, width=5, text='Y-', bg='red')
-Btn10 = Button(top, width=5, text='Y+', bg='red')
-Btn11 = Button(top, width=5, height=2, text='HOME', bg='red')
+Btn07 = tki.Button(top, width=5, text='X+', bg='red')
+Btn08 = tki.Button(top, width=5, text='X-', bg='red')
+Btn09 = tki.Button(top, width=5, text='Y-', bg='red')
+Btn10 = tki.Button(top, width=5, text='Y+', bg='red')
+Btn11 = tki.Button(top, width=5, height=2, text='HOME', bg='red')
 
 # =============================================================================
 # Buttons layout
@@ -163,10 +163,10 @@ def changeSpeed(ev=None):
 	print('sendData = %s' % data)
 	tcpCliSock.send(data.encode())  # Send the speed data to the server(Raspberry Pi)
 
-label = Label(top, text='Speed:', fg='red')  # Create a label
+label = tki.Label(top, text='Speed:', fg='red')  # Create a label
 label.grid(row=6, column=0)                  # Label layout
 
-speed = Scale(top, from_=0, to=100, orient=HORIZONTAL, command=changeSpeed)  # Create a scale
+speed = tki.Scale(top, from_=0, to=100, orient=tki.HORIZONTAL, command=changeSpeed)  # Create a scale
 speed.set(50)
 speed.grid(row=6, column=1)
 
