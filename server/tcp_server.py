@@ -2,16 +2,18 @@
 # Replace libraries by fake ones
 import sys
 import fake_rpi
-import codecs
+
 
 sys.modules['RPi'] = fake_rpi.RPi     # Fake RPi (GPIO)
 sys.modules['smbus'] = fake_rpi.smbus # Fake smbus (I2C)
 
+import codecs
 import video_dir
 import car_dir
 import motor
 import socket as sck
-from time import ctime          # Import necessary modules   
+import time
+# Import necessary modules   
 
 ctrl_cmd = ['forward', 'backward', 'left', 'right', 'stop', 'read cpu_temp', 'home', 'distance', 'x+', 'x-', 'y+', 'y-', 'xy_home']
 
@@ -67,8 +69,8 @@ while True:
 			motor.ctrl(0)
 		elif data == ctrl_cmd[5]:
 			print('read cpu temp...')
-			#temp = cpu_temp.read()
-			#tcpCliSock.send('[%s] %0.2f' % (ctime(), temp))
+			temp = 0 #cpu_temp.read()
+			tcpCliSock.send('[%s] %0.2f' % (time.ctime(), temp))
 		elif data == ctrl_cmd[8]:
 			print('recv x+ cmd')
 			video_dir.move_increase_x()
