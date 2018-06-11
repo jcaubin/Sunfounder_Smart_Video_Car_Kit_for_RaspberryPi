@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import PCA9685 as servo
 import time                # Import necessary modules
+import os
 
 def Map(x, in_min, in_max, out_min, out_max):
 	return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min
@@ -17,6 +18,7 @@ def setup(busnum=None):
 				offset = int(line[9:-1])
 	except:
 		print('config error')
+		print(os.getcwd())
 	leftPWM += offset
 	homePWM += offset
 	rightPWM += offset

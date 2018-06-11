@@ -8,7 +8,7 @@ ctrl_cmd = ['forward', 'backward', 'left', 'right', 'stop', 'read cpu_temp', 'ho
 top = tki.Tk()   # Create a top window
 top.title('Sunfounder Raspberry Pi Smart Video Car')
 
-HOST = '127.0.0.1'    # Server(Raspberry Pi) IP address
+HOST = '192.168.1.192'    # Server(Raspberry Pi) IP address
 PORT = 21568
 BUFSIZ = 1024             # buffer size
 ADDR = (HOST, PORT)

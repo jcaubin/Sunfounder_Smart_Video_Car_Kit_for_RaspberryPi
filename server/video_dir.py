@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import PCA9685 as servo
 import time                  # Import necessary modules
+import os
 
 MinPulse = 200
 MaxPulse = 700
@@ -21,6 +22,8 @@ def setup(busnum=None):
 				offset_y = int(line[11:-1])
 				#print 'offset_y =', offset_y
 	except:
+		print("Error opening config file")
+		print(os.getcwd())
 		pass
 	Xmin = MinPulse + offset_x
 	Xmax = MaxPulse + offset_x
