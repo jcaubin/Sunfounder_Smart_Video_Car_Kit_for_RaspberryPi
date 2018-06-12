@@ -84,30 +84,29 @@ class PWM(object):
 
        
 
-        try:       
-            f = open('/proc/cpuinfo','r')
-            for line in f:
-                if line.startswith('Revision'):
-                    if line[11:-1] in self.RPI_REVISION_0:
-                        return '0'
-                    elif line[11:-1] in self.RPI_REVISION_1_MODULE_B:
-                        return '1 Module B'
-                    elif line[11:-1] in self.RPI_REVISION_1_MODULE_A:
-                        return '1 Module A'
-                    elif line[11:-1] in self.RPI_REVISION_1_MODULE_BP:
-                        return '1 Module B+'
-                    elif line[11:-1] in self.RPI_REVISION_1_MODULE_AP:
-                        return '1 Module A+'
-                    elif line[11:-1] in self.RPI_REVISION_2:
-                        return '2 Module B'
-                    elif line[11:-1] in self.RPI_REVISION_3:
-                        return '3 Module B'
-                    else:
-                        print("Error. Pi revision didn't recognize, module number: %s" % line[11:-1])
-                        print('Exiting...')
-                        quit()
+        try:
+            with open('/proc/cpuinfo','r') as f:       
+                for line in f:
+                    if line.startswith('Revision'):
+                        if line[11:-1] in self.RPI_REVISION_0:
+                            return '0'
+                        elif line[11:-1] in self.RPI_REVISION_1_MODULE_B:
+                            return '1 Module B'
+                        elif line[11:-1] in self.RPI_REVISION_1_MODULE_A:
+                            return '1 Module A'
+                        elif line[11:-1] in self.RPI_REVISION_1_MODULE_BP:
+                            return '1 Module B+'
+                        elif line[11:-1] in self.RPI_REVISION_1_MODULE_AP:
+                            return '1 Module A+'
+                        elif line[11:-1] in self.RPI_REVISION_2:
+                            return '2 Module B'
+                        elif line[11:-1] in self.RPI_REVISION_3:
+                            return '3 Module B'
+                        else:
+                            print("Error. Pi revision didn't recognize, module number: %s" % line[11:-1])
+                            print('Exiting...')
+                            quit()
         except Exception as e:
-            f.close()
             if platform.system() == 'Windows':
                 print('Entorno de pruebas en windows')
                  #fake
@@ -117,7 +116,8 @@ class PWM(object):
                 print('Exiting...')
                 quit()
         finally:
-            f.close()
+            pass
+
 
     def __init__(self, bus_number=None, address=0x40):
         '''Init the class with bus_number and address'''
