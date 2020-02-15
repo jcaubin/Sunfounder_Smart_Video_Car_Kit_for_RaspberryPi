@@ -8,7 +8,7 @@ ctrl_cmd = ['forward', 'backward', 'left', 'right', 'stop', 'read cpu_temp', 'ho
 top = tki.Tk()   # Create a top window
 top.title('Sunfounder Raspberry Pi Smart Video Car')
 
-HOST = '192.168.1.192'    # Server(Raspberry Pi) IP address
+HOST = '127.0.0.1'    # Server(Raspberry Pi) IP address
 PORT = 21568
 BUFSIZ = 1024             # buffer size
 ADDR = (HOST, PORT)
@@ -76,12 +76,12 @@ def quit_fun(event):
 # =============================================================================
 # Create buttons
 # =============================================================================
-Btn0 = tki.Button(top, width=5, text='Forward')
-Btn1 = tki.Button(top, width=5, text='Backward')
-Btn2 = tki.Button(top, width=5, text='Left')
-Btn3 = tki.Button(top, width=5, text='Right')
+Btn0 = tki.Button(top, width=5, text='Forward w')
+Btn1 = tki.Button(top, width=5, text='Backward s')
+Btn2 = tki.Button(top, width=5, text='Left a')
+Btn3 = tki.Button(top, width=5, text='Right d')
 Btn4 = tki.Button(top, width=5, text='Quit')
-Btn5 = tki.Button(top, width=5, height=2, text='Home')
+Btn5 = tki.Button(top, width=5, height=2, text='Home h')
 
 # =============================================================================
 # Buttons layout

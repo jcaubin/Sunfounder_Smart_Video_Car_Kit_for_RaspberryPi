@@ -13,11 +13,11 @@
 
 
 import sys
-import fake_rpi
+#import fake_rpi
 import platform
 
-sys.modules['RPi'] = fake_rpi.RPi     # Fake RPi (GPIO)
-sys.modules['smbus'] = fake_rpi.smbus # Fake smbus (I2C)
+#sys.modules['RPi'] = fake_rpi.RPi     # Fake RPi (GPIO)
+#sys.modules['smbus'] = fake_rpi.smbus # Fake smbus (I2C)
 
 import smbus
 import time
@@ -53,6 +53,7 @@ class PWM(object):
     RPI_REVISION_1_MODULE_AP = ["0012"]
     RPI_REVISION_2 = ["a01041", "a21041"]
     RPI_REVISION_3 = ["a02082", "a22082"]
+    RPI_REVISION_4 = ["c03112"]
 
     _DEBUG = False
     _DEBUG_INFO = 'DEBUG "PCA9685.py":'
@@ -74,6 +75,8 @@ class PWM(object):
         elif pi_revision == '2 Module B':
             return 1
         elif pi_revision == '3 Module B':
+            return 1
+        elif pi_revision == '4 Module B':
             return 1
 
     def _get_pi_revision(self):
@@ -102,6 +105,8 @@ class PWM(object):
                             return '2 Module B'
                         elif line[11:-1] in self.RPI_REVISION_3:
                             return '3 Module B'
+                        elif line[11:-1] in self.RPI_REVISION_4:
+                            return '4 Module B'
                         else:
                             print("Error. Pi revision didn't recognize, module number: %s" % line[11:-1])
                             print('Exiting...')
@@ -276,14 +281,20 @@ class PWM(object):
 if __name__ == '__main__':
     import time
 
-    pwm = PWM()
-    pwm.debug=True
-    pwm.frequency = 60
-    for i in range(16):
-        time.sleep(0.5)
-        print('\nChannel %d\n' % i)
-        time.sleep(0.5)
-        for j in range(4096):
-            pwm.write(i, 0, j)
-            print('PWM value: %d' % j)
-            time.sleep(0.0003)
+    try:
+        pwm = PWM()
+        pwm.debug=True
+        pwm.frequency = 60
+
+
+        for i in range(16):
+            time.sleep(0.5)
+            print('\nChannel %d\n' % i)
+            time.sleep(0.5)
+            for j in range(4096):
+                pwm.write(i, 0, j)
+                print('PWM value: %d' % j)
+                time.sleep(0.0003)
+    except KeyboardInterrupt:
+        pass
+

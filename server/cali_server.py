@@ -1,18 +1,18 @@
 #!/usr/bin/env python
 import sys
-import fake_rpi
 import codecs
-
-sys.modules['RPi'] = fake_rpi.RPi     # Fake RPi (GPIO)
-sys.modules['smbus'] = fake_rpi.smbus
-
 import RPi.GPIO as GPIO
 import video_dir
 import car_dir
 import motor
-
 import socket as sck
 from time import ctime          # Import necessary modules   
+
+# import fake_rpi
+# sys.modules['RPi'] = fake_rpi.RPi     # Fake RPi (GPIO)
+# sys.modules['smbus'] = fake_rpi.smbus
+
+
 
 HOST = ''           # The variable of HOST is null, so the function bind( ) can be bound to all valid addresses.
 PORT = 21567
