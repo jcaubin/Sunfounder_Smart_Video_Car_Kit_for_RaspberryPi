@@ -283,11 +283,11 @@ if __name__ == '__main__':
 
     try:
         pwm = PWM()
-        pwm.debug=True
+        pwm.debug=False
         pwm.frequency = 60
 
 
-        for i in range(16):
+        for i in range(2):
             time.sleep(0.5)
             print('\nChannel %d\n' % i)
             time.sleep(0.5)

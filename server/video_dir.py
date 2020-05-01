@@ -109,3 +109,4 @@ def test():
 if __name__ == '__main__':
 	setup()
 	home_x_y()
+	test()
