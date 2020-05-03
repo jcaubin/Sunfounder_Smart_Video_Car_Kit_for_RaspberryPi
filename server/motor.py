@@ -27,8 +27,8 @@ Motor1_B = 15  # pin15
 # Set channel 4 and 5 of the servo driver IC to generate PWM, thus 
 # controlling the speed of the car
 # ===========================================================================
-EN_M0    = 4  # servo driver IC CH4
-EN_M1    = 5  # servo driver IC CH5
+EN_M0    = 5  # servo driver IC CH4
+EN_M1    = 4  # servo driver IC CH5
 
 pins = [Motor0_A, Motor0_B, Motor1_A, Motor1_B]
 
@@ -37,7 +37,7 @@ pins = [Motor0_A, Motor0_B, Motor1_A, Motor1_B]
 # the servo driver IC, so as to control the speed of the car.
 # ===========================================================================
 def setSpeed(speed):
-	speed *= 40
+	speed *= 41
 	print(('speed is: ', speed))
 	pwm.write(EN_M0, 0, speed)
 	pwm.write(EN_M1, 0, speed)
@@ -50,7 +50,7 @@ def setup(busnum=None):
 	else:
 		pwm = p.PWM(bus_number=busnum) # Initialize the servo controller.
 
-	pwm.frequency = 60
+	pwm.frequency = 50
 	forward0 = 'True'
 	forward1 = 'True'
 	GPIO.setwarnings(False)
@@ -116,8 +116,14 @@ def backwardWithSpeed(spd = 50):
 	motor1(backward1)
 
 def stop():
+	setSpeed(0)
 	for pin in pins:
 		GPIO.output(pin, GPIO.LOW)
+
+def brake():
+	setSpeed(0)
+	for pin in pins:
+		GPIO.output(pin, GPIO.HIGH)
 
 # ===========================================================================
 # The first parameter(status) is to control the state of the car, to make it 
@@ -137,20 +143,25 @@ def ctrl(status, direction=1):
 	else:
 		print ('Argument error! status must be 0 or 1.')
 
+
 def test():
-	while True:
-		setup()
-		ctrl(1)
-		time.sleep(3)
-		setSpeed(10)
-		time.sleep(3)
-		setSpeed(100)
-		time.sleep(3)
-		ctrl(0)
+	stop()
+	for i in range(100):
+		forwardWithSpeed(i)
+		time.sleep(0.5)
+	stop()
+	time.sleep(1)
+	for i in range(100):
+		backwardWithSpeed(i)
+		time.sleep(0.5)
+	stop()
+
 
 if __name__ == '__main__':
-	setup()
-	setSpeed(50)
-	forward()
-	backward()
-	stop()
+	try:
+		setup()
+		test()
+
+	except KeyboardInterrupt:
+		stop()
+
