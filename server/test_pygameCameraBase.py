@@ -1,19 +1,18 @@
 import pygame as pg
 import pygame.camera as pgcam
 from pygame.locals import *
-import test_cameraControl as cc
-import pcf8591 as js
+
 
 pg.init()
 pgcam.init()
-js.setup(0x48)
+
 
 camlist = pgcam.list_cameras()
 for c in camlist:
     print(c)
 
 
-cc.ms=1
+
 
 # cam = pgcam.Camera("/dev/video0",(640,480))
 # print(cam)
@@ -42,27 +41,8 @@ class Capture(object):
         # bit depth is the same as that of the display surface.
         self.snapshot = pg.surface.Surface(self.size, 0, self.display)
 
-    def camera_control(self, pressedKeys):
-        if pressedKeys:
-            if pressedKeys[pg.K_UP]:
-                cc.moveUp()
-            if pressedKeys[pg.K_DOWN]:
-                cc.moveDown()
-            if pressedKeys[pg.K_LEFT]:
-                cc.moveLeft()
-            if pressedKeys[pg.K_RIGHT]:
-                cc.moveRigth()
-    
-    def camera_control_js(self, joystic):
-        if joystic:
-            if joystic[js.J_UP]:
-                cc.moveUp()
-            if joystic[js.J_DOWN]:
-                cc.moveDown()
-            if joystic[js.J_LEFT]:
-                cc.moveLeft()
-            if joystic[js.J_RIGHT]:
-                cc.moveRigth()
+
+
 
     def get_and_flip(self):
         # if you don't want to tie the framerate to the camera, you can check
@@ -77,9 +57,7 @@ class Capture(object):
 
     def main(self):
         going = True
-        #posicion camara
-        pan = ''
-        tilt=''
+
         clock = pg.time.Clock()
         while going:
             events = pg.event.get()
@@ -89,10 +67,7 @@ class Capture(object):
                     self.cam.stop()
                     going = False
 
-            #self.camera_control(pg.key.get_pressed() )
-            self.camera_control_js(js.get_joystick())
             self.get_and_flip()
-            
             clock.tick(60)
 
 
